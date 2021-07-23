@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Please enter a version number to see all software with later versions.</p>
+    <input type="text" oninput="versionInputChanged(this)"/>
+    <div id="results" class="text-center"></div>
+</div>
+
+<script>
+    function versionInputChanged(input){
+        var version = input.value;
+
+        lookupSoftwareWithVersionLaterThan(version)
+            .done(function(results){
+                var resultsHtml = results.map(function(result){
+                    return `<div>${result.name} - ${result.version}</div>`;
+                });
+
+                document.getElementById('results').innerHTML = resultsHtml.join('');
+            });
+    }
+</script>
